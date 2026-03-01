@@ -24,6 +24,8 @@ npm install
 cp .env.example .env
 ```
 
+If you already have a `.env`, make sure `DATABASE_URL` uses port `5433` to avoid conflicts with any local Postgres on `5432`.
+
 3. Start Postgres, wait for readiness, run migrations, and seed baseline data:
 
 ```bash
@@ -37,6 +39,7 @@ npm run dev:full
 ```
 
 Client runs on `http://localhost:5173`, API runs on `http://localhost:3001`.
+Docker Postgres is exposed on `localhost:5433`.
 
 Quickest path after cloning:
 
