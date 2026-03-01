@@ -4,11 +4,17 @@ import { resolve } from 'node:path'
 import { pool } from '../src/db'
 
 const run = async (): Promise<void> => {
-  const migrationPath = resolve(process.cwd(), 'server/migrations/001_init.sql')
-  const sql = await readFile(migrationPath, 'utf8')
-  await pool.query(sql)
+  const migrationFiles = ['001_init.sql', '002_automation.sql']
+
+  for (const fileName of migrationFiles) {
+    const migrationPath = resolve(process.cwd(), 'server/migrations', fileName)
+    const sql = await readFile(migrationPath, 'utf8')
+    await pool.query(sql)
+    console.log(`Applied migration: ${fileName}`)
+  }
+
   await pool.end()
-  console.log('Migration complete: 001_init.sql')
+  console.log('Migrations complete')
 }
 
 run().catch(async (error) => {
